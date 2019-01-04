@@ -17,7 +17,7 @@ def get_face_images(video_path):
         if not ret:
             break
             
-        if count % 60 != 0:
+        if count % 30 != 0:
             continue
 
         gray_scale = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -30,8 +30,6 @@ def get_face_images(video_path):
 
         resized_list = list(map(resize, result_list))
         [save_image(v, i) for i, v in enumerate(resized_list)]
-
-    return True
 
 
 def save_image(src, index):
@@ -62,8 +60,7 @@ def main():
     print(video_list)
 
     with Pool(processes=len(video_list)) as pool:
-        result = pool.map(get_face_images, video_list)
-        result.wait ()
+        pool.map(get_face_images, video_list)
 
 
 main() if __name__ == '__main__' else None
